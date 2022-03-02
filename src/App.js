@@ -1,6 +1,6 @@
 import React from "react";
 import "antd/dist/antd.css";
-import "./App.scss";
+import "./style/App.scss";
 import ChatRoom from "./components/ChatRoom";
 import SignIn from "./components/SignIn";
 import { useAuthState } from "react-firebase-hooks/auth";

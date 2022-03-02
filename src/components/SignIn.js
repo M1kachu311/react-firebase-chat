@@ -3,7 +3,8 @@ import { signInAnonymously, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import { message, Input } from "antd";
 import { useNavigate } from "react-router-dom";
-import {LoginOutlined} from '@ant-design/icons';
+import { LoginOutlined, WechatOutlined } from "@ant-design/icons";
+import "../style/SignIn.scss";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function SignIn() {
     setDisplayName(event.target.value);
   };
 
-  const handleClick = async () => {
+  const handleLogin = async () => {
     if (!displayName) {
       message.error("Please enter a display name", 3);
       return;
@@ -24,16 +25,27 @@ function SignIn() {
   };
   return (
     <div className="signIn">
-      <div className="signInHeader">Welcome to the chat</div>
+      <div className="signInHeader">
+        ChatMock <WechatOutlined />
+      </div>
       <div> Enter your name below</div>
       <Input
         name="displayName"
         className="displayNameInput"
         value={displayName}
         onChange={handleChange}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleLogin();
+          }
+        }}
       />
-      <div type="primary" onClick={handleClick} className="signInButton pillButton">
-        <LoginOutlined/>
+      <div
+        type="primary"
+        onClick={handleLogin}
+        className="signInButton pillButton"
+      >
+        <LoginOutlined />
         Sign In
       </div>
     </div>

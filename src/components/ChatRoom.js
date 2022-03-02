@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ChatMessage from "./ChatMessage";
 import ChatForm from "./ChatForm";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import "../style/ChatRoom.scss";
 
 function ChatRoom({ user }) {
   const navigate = useNavigate();
