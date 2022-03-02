@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { signInAnonymously ,updateProfile} from "firebase/auth";
+import { signInAnonymously, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import { message, Input, Button } from "antd";
+import { useNavigate } from "react-router-dom";
 
 function SignIn() {
+  const navigate = useNavigate();
   const [displayName, setDisplayName] = useState("");
 
   const handleChange = (event) => {
@@ -15,8 +17,9 @@ function SignIn() {
       message.error("Please enter a display name", 3);
       return;
     }
-    const {user}  = await signInAnonymously(auth);
+    const { user } = await signInAnonymously(auth);
     await updateProfile(user, { displayName });
+    navigate("/chat");
   };
   return (
     <div className="signIn">

@@ -7,7 +7,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 18px;
+  padding:10px;
+  box-sizing: border-box;
   .signIn {
     .loginContainer {
       display: flex;
@@ -15,5 +17,27 @@
           margin-right: 5px;
       }
     }
+  }
+  .chatRoomContainer{
+      min-height: 100%;
+      width:75%;
+      .chatRoomHeader{
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          margin-bottom:5px;
+          .greeting{
+              margin-right: 10px;
+          }
+      }
+      .messagesContainer{
+          background-color: white;
+          width: 100%;
+          height: 500px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          color:black;
+      }
   }
 }
