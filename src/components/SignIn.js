@@ -1,22 +1,35 @@
-import React from "react";
-import { getAuth, signInAnonymously } from "firebase/auth";
+import React, { useState } from "react";
+import { signInAnonymously ,updateProfile} from "firebase/auth";
+import { auth } from "../firebase";
+import { message, Input, Button } from "antd";
 
-function SignIn({ auth }) {
+function SignIn() {
+  const [displayName, setDisplayName] = useState("");
+
+  const handleChange = (event) => {
+    setDisplayName(event.target.value);
+  };
+
+  const handleClick = async () => {
+    if (!displayName) {
+      message.error("Please enter a display name", 3);
+      return;
+    }
+    const {user}  = await signInAnonymously(auth);
+    await updateProfile(user, { displayName });
+  };
   return (
-    <div>
-      <button
-        onClick={() => {
-          signInAnonymously(auth)
-            .then(() => {
-              console.log("logged in");
-              console.log(auth);
-            })
-            .catch();
-        }}
-      >
-        sign in
-      </button>
-      <div>Sign In</div>
+    <div className="signIn">
+      <div className="loginContainer">
+        <Input
+          placeholder="Display name"
+          value={displayName}
+          onChange={handleChange}
+        />
+        <Button type="primary" onClick={handleClick}>
+          Sign In
+        </Button>
+      </div>
     </div>
   );
 }
