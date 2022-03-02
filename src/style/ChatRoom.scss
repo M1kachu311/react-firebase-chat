@@ -1,87 +1,94 @@
 .chatRoom {
-    width: 100%;
-    max-width: 720px;
-    .chatRoomHeader {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background-color: #242a38;
-      padding: 20px;
-      height: 80px;
-      .greeting {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        line-height: 1.25;
-        span:nth-child(1) {
-          font-size: 24px;
-          font-weight: 500;
-          color: white;
-        }
-        span:nth-child(2) {
-          font-weight: 300;
-          color: #d8dadb;
-        }
-      }
-      .logoutButton {
-        svg {
-          margin-right: 5px;
-        }
-      }
-    }
-    .messagesContainer {
-      background-color: #f1f3f4;
-      width: 100%;
-      height: calc(100vh - 160px);
+  width: 100%;
+  max-width: 720px;
+  .chatRoomHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #242a38;
+    padding: 20px;
+    height: 80px;
+    .greeting {
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      overflow: auto;
-      .chatMessage {
-        padding: 4px 15px;
-        text-align: left;
-        .displayNameContainer {
-          font-weight: 700;
-          font-size:18px;
-        }
+      align-items: flex-start;
+      line-height: 1.25;
+      span:nth-child(1) {
+        font-size: 24px;
+        font-weight: 500;
+        color: white;
       }
-      &::-webkit-scrollbar {
-        background-color: transparent;
-        width: 5px;
-      }
-      &::-webkit-scrollbar-thumb {
-        background-color: #babac0;
-        border-radius: 50px;
-        border: 4px solid transparent;
+      span:nth-child(2) {
+        font-weight: 300;
+        color: #d8dadb;
       }
     }
-    .formContainer {
-      height: 80px;
-      display: flex;
-      position: relative;
-
-      .emojiSelectorButton {
-        font-size: 32px;
-        position: absolute;
-        right: 128px;
-        top: 33%;
-        color: #d9d9d9;
-      }
-      .sendMessageButton {
-        width: 140px;
-        height: 100%;
-        color:white;
-        background: rgba(245, 75, 100, 1);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 30px;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.5, 1, 0.89, 1);
-        &:hover {
-          background: darken($color: rgba(245, 75, 100, 1), $amount: 5);
-        }
+    .logoutButton {
+      svg {
+        margin-right: 5px;
       }
     }
   }
+  .messagesContainer {
+    background-color: #f1f3f4;
+    width: 100%;
+    height: calc(100vh - 160px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .chatMessage {
+      padding: 4px 15px;
+      text-align: left;
+      .chatMessageName {
+        font-weight: 700;
+        font-size: 18px;
+      }
+      .chatMessageTime {
+        font-size: 10px;
+      }
+      .chatMessageText {
+        margin-bottom: 0px;
+      }
+    }
+    &::-webkit-scrollbar {
+      background-color: transparent;
+      width: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #babac0;
+      border-radius: 50px;
+      border: 4px solid transparent;
+    }
+  }
+  .formContainer {
+    height: 80px;
+    display: flex;
+    position: relative;
+
+    .emojiSelectorButton {
+      font-size: 32px;
+      position: absolute;
+      right: 128px;
+      top: 33%;
+      color: #d9d9d9;
+    }
+    .sendMessageButton {
+      width: 140px;
+      height: 100%;
+      color: white;
+      background: rgba(245, 75, 100, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 30px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.5, 1, 0.89, 1);
+      &:hover {
+        background: darken($color: rgba(245, 75, 100, 1), $amount: 5);
+      }
+    }
+  }
+}
