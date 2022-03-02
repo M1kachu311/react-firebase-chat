@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { signInAnonymously, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
-import { message, Input, Button } from "antd";
+import { message, Input } from "antd";
 import { useNavigate } from "react-router-dom";
+import {LoginOutlined} from '@ant-design/icons';
 
 function SignIn() {
   const navigate = useNavigate();
@@ -23,15 +24,18 @@ function SignIn() {
   };
   return (
     <div className="signIn">
+      <div className="signInHeader">Welcome to the chat</div>
+      <div> Enter your name below</div>
       <Input
+        name="displayName"
         className="displayNameInput"
-        placeholder="Display name"
         value={displayName}
         onChange={handleChange}
       />
-      <Button type="primary" onClick={handleClick}>
+      <div type="primary" onClick={handleClick} className="signInButton pillButton">
+        <LoginOutlined/>
         Sign In
-      </Button>
+      </div>
     </div>
   );
 }

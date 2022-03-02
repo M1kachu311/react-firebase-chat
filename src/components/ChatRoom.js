@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { db, auth } from "../firebase";
-import { collection, orderBy, query, limit, addDoc } from "firebase/firestore";
-import { Button } from "antd";
+import { collection, orderBy, query, limitToLast } from "firebase/firestore";
+import { LogoutOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import ChatMessage from "./ChatMessage";
-import ChatForm from './ChatForm';
+import ChatForm from "./ChatForm";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 function ChatRoom({ user }) {
   const navigate = useNavigate();
   const [userColor, setUserColor] = useState();
   const messagesRef = collection(db, "messages");
-  const messagesQuery = query(messagesRef, orderBy("created_date"), limit(25));
+  const messagesQuery = query(
+    messagesRef,
+    orderBy("created_date"),
+    limitToLast(50)
+  );
   const [messages] = useCollectionData(messagesQuery);
-
+  const messagesContainerRef = useRef(null);
 
   useEffect(() => {
     if (user) {
@@ -25,30 +29,40 @@ function ChatRoom({ user }) {
     }
   }, [user]);
 
+  useEffect(() => {
+    //scroll to bottom when we get new messages
+    const messagesContainer = messagesContainerRef.current;
+    messagesContainer.scrollTo({
+      top: messagesContainer.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [messages]);
+
   return (
     <div className="chatRoom">
       <div className="chatRoomHeader">
-        <div className="greeting"> 
-          <span>Hi {user?.displayName}, </span> 
-          <span>Say hi to your friends 👋</span> 
+        <div className="greeting">
+          <span>Hi {user?.displayName}, </span>
+          <span>Say hi to your friends 👋</span>
         </div>
-        <Button
-          className="logoutButton"
+        <div
+          className="logoutButton pillButton"
           type="primary"
           onClick={() => {
             auth.signOut();
           }}
         >
+          <LogoutOutlined />
           Sign out
-        </Button>
+        </div>
       </div>
-      <div className="messagesContainer">
+      <div className="messagesContainer" ref={messagesContainerRef}>
         {messages &&
           messages.map((message) => {
-            return <ChatMessage message={message} key={message.id} />;
+            return <ChatMessage message={message} />;
           })}
       </div>
-     <ChatForm user={user} userColor={userColor}/>
+      <ChatForm user={user} userColor={userColor} />
     </div>
   );
 }

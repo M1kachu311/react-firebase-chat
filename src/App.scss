@@ -5,9 +5,9 @@
 }
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #4e596f;
   min-height: 100vh;
-  color: white;
+  color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,9 +16,27 @@
   box-sizing: border-box;
   user-select: none;
   .signIn {
+    background-color: #242a38;
+    height: 100vh;
+    width: 100%;
+    max-width: 720px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .signInHeader {
+      font-size: 48px;
+      margin-bottom: 50px;
+    }
     .displayNameInput {
-      margin-right: 5px;
+      width: 200px;
+      margin: 8px 0 20px 0;
+    }
+    .signInButton {
+      width: 200px;
+      svg {
+        margin-right: 5px;
+      }
     }
   }
   .chatRoom {
@@ -28,20 +46,27 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background-color: #181717;
+      background-color: #242a38;
       padding: 20px;
       height: 80px;
       .greeting {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        line-height: 1.1;
-        span:nth-child(1){
-            font-size:24px;
-            font-weight: 500;
+        line-height: 1.25;
+        span:nth-child(1) {
+          font-size: 24px;
+          font-weight: 500;
+          color: white;
         }
-        span:nth-child(2){
-            font-weight: 300;
+        span:nth-child(2) {
+          font-weight: 300;
+          color: #d8dadb;
+        }
+      }
+      .logoutButton {
+        svg {
+          margin-right: 5px;
         }
       }
     }
@@ -52,7 +77,6 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      color: black;
       overflow: auto;
       .chatMessage {
         padding: 4px 15px;
@@ -61,14 +85,67 @@
           font-weight: 500;
         }
       }
+      &::-webkit-scrollbar {
+        background-color: transparent;
+        width: 5px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #babac0;
+        border-radius: 50px;
+        border: 4px solid transparent;
+      }
     }
     .formContainer {
       height: 80px;
-      background-color: #181717;
       display: flex;
-      padding: 10px;
+      position: relative;
+
       .emojiSelectorButton {
+        font-size: 32px;
+        position: absolute;
+        right: 128px;
+        top: 33%;
+        color: #d9d9d9;
+      }
+      .sendMessageButton {
+        width: 140px;
+        height: 100%;
+        background: rgba(245, 75, 100, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 30px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.5, 1, 0.89, 1);
+        &:hover {
+          background: darken($color: rgba(245, 75, 100, 1), $amount: 5);
+        }
       }
     }
+  }
+}
+//pill button for login and logout buttons
+.pillButton {
+  cursor: pointer;
+  border-radius: 500px;
+  padding: 8px 16px;
+  transition: all 0.3s cubic-bezier(0.5, 1, 0.89, 1);
+  color: white;
+  border: 1px solid white;
+  &:hover {
+    color: #c0c2c3;
+    border-color: #c0c2c3;
+  }
+}
+//fix inputs annoying blue outline
+.ant-input {
+  &:hover {
+    border-color: #d9d9d9;
+    box-shadow: none;
+  }
+  &:focus {
+    border-color: #d9d9d9;
+    box-shadow: none;
   }
 }
