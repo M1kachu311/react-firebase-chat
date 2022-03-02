@@ -1,27 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../firebase";
-import { collection, orderBy, query, getDocs, limit } from "firebase/firestore";
-import { Button } from "antd";
+import { collection, orderBy, query, limit, addDoc } from "firebase/firestore";
+import { Button, Input } from "antd";
 import { useNavigate } from "react-router-dom";
-import InputEmoji from "react-input-emoji";
+import ChatMessage from "./ChatMessage";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
 function ChatRoom({ user }) {
   const navigate = useNavigate();
-  const [text, setText] = useState("");
-  const handleOnEnter = (text) => {
-    console.log("enter", text);
+  const [userColor, setUserColor] = useState();
+  const [newMessage, setNewMessage] = useState("");
+  const messagesRef = collection(db, "messages");
+  const messagesQuery = query(messagesRef, orderBy("created_date"), limit(25));
+  const [messages] = useCollectionData(messagesQuery);
+
+  const handleSendMessage = async (e) => {
+    if (e.key === "Enter") {
+      if (newMessage) {
+        await addDoc(messagesRef, {
+          uid: user.uid,
+          name: user.displayName,
+          text: newMessage,
+          color: userColor,
+          created_date: new Date(),
+        });
+        setNewMessage("");
+      }
+    }
   };
-  //   const [messages, setMessages] = useState([]);
-
-  //   const messagesRef = collection(db, "messages");
-  //   const messagesQuery = query(messagesRef, orderBy("created_date"), limit(25));
-  //   getDocs(messagesQuery).then((response) => {
-  //     console.log(response);
-  //   });
-
+  const handleChange = (event) => {
+    setNewMessage(event.target.value);
+  };
   useEffect(() => {
-    //redirect to login when logged out
-    if (!user) {
+    if (user) {
+      //generate random color for user in chat
+      setUserColor(`#${Math.floor(Math.random() * 16777215).toString(16)}`);
+    } else {
+      //redirect to login when logged out
       navigate("/");
     }
   }, [user]);
@@ -41,19 +56,18 @@ function ChatRoom({ user }) {
         </Button>
       </div>
       <div className="messagesContainer">
-        <p>message1</p>
-        <p>message2</p>
-        <p>message3</p>
+        {messages &&
+          messages.map((message) => {
+            return <ChatMessage message={message} key={message.id} />;
+          })}
       </div>
       <div className="textAreaContainer">
-        <InputEmoji
-          value={text}
-          onChange={setText}
-          cleanOnEnter
-          onEnter={handleOnEnter}
-          placeholder="Type a message"
-          borderRadius={0}
-        />
+        <Input
+          placeholder="Send a message"
+          value={newMessage}
+          onChange={handleChange}
+          onKeyDown={handleSendMessage}
+        ></Input>
       </div>
     </div>
   );

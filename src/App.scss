@@ -10,6 +10,7 @@
   font-size: 18px;
   padding:10px;
   box-sizing: border-box;
+  user-select: none;
   .signIn {
     .loginContainer {
       display: flex;
@@ -38,6 +39,18 @@
           flex-direction: column;
           justify-content: flex-start;
           color:black;
+          overflow: auto;
+          margin-bottom:5px;
+          .chatMessage{
+              padding:2px;
+              text-align: left;
+              .displayNameContainer{
+                  font-weight: 500;
+              }
+          }
+      }
+      .textAreaContainer{
+        display: flex;
       }
   }
 }
