@@ -1,36 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../firebase";
 import { collection, orderBy, query, limit, addDoc } from "firebase/firestore";
-import { Button, Input } from "antd";
+import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import ChatMessage from "./ChatMessage";
+import ChatForm from './ChatForm';
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 function ChatRoom({ user }) {
   const navigate = useNavigate();
   const [userColor, setUserColor] = useState();
-  const [newMessage, setNewMessage] = useState("");
   const messagesRef = collection(db, "messages");
   const messagesQuery = query(messagesRef, orderBy("created_date"), limit(25));
   const [messages] = useCollectionData(messagesQuery);
 
-  const handleSendMessage = async (e) => {
-    if (e.key === "Enter") {
-      if (newMessage) {
-        await addDoc(messagesRef, {
-          uid: user.uid,
-          name: user.displayName,
-          text: newMessage,
-          color: userColor,
-          created_date: new Date(),
-        });
-        setNewMessage("");
-      }
-    }
-  };
-  const handleChange = (event) => {
-    setNewMessage(event.target.value);
-  };
+
   useEffect(() => {
     if (user) {
       //generate random color for user in chat
@@ -42,9 +26,12 @@ function ChatRoom({ user }) {
   }, [user]);
 
   return (
-    <div className="chatRoomContainer">
+    <div className="chatRoom">
       <div className="chatRoomHeader">
-        <div className="greeting"> Hello {user?.displayName}</div>
+        <div className="greeting"> 
+          <span>Hi {user?.displayName}, </span> 
+          <span>Say hi to your friends 👋</span> 
+        </div>
         <Button
           className="logoutButton"
           type="primary"
@@ -61,14 +48,7 @@ function ChatRoom({ user }) {
             return <ChatMessage message={message} key={message.id} />;
           })}
       </div>
-      <div className="textAreaContainer">
-        <Input
-          placeholder="Send a message"
-          value={newMessage}
-          onChange={handleChange}
-          onKeyDown={handleSendMessage}
-        ></Input>
-      </div>
+     <ChatForm user={user} userColor={userColor}/>
     </div>
   );
 }

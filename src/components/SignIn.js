@@ -23,16 +23,15 @@ function SignIn() {
   };
   return (
     <div className="signIn">
-      <div className="loginContainer">
-        <Input
-          placeholder="Display name"
-          value={displayName}
-          onChange={handleChange}
-        />
-        <Button type="primary" onClick={handleClick}>
-          Sign In
-        </Button>
-      </div>
+      <Input
+        className="displayNameInput"
+        placeholder="Display name"
+        value={displayName}
+        onChange={handleChange}
+      />
+      <Button type="primary" onClick={handleClick}>
+        Sign In
+      </Button>
     </div>
   );
 }

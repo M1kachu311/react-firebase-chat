@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.scss";
 import "antd/dist/antd.css";
 import ChatRoom from "./components/ChatRoom";
