@@ -33,7 +33,7 @@ function ChatMessage({ message }) {
       className={`chatMessage ${message.uid === user?.uid ? "myMessage" : "notMyMessage"}`}
     >
       <span className="chatMessageName" style={{ color: message.color }}>
-        {message.name + " "}
+        {message.name}
       </span>
       <p className="chatMessageText">{message.text}</p>
       <p className="chatMessageTime">{getTimeDiffString(message)}</p>
