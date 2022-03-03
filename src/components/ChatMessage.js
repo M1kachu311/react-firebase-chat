@@ -1,6 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import "../style/ChatMessage.scss";
 
 function ChatMessage({ message }) {
+  const { user } = useSelector((state) => state.user);
+
   const getTimeDiffString = (message) => {
     const oneSecond = 1000;
     const oneMinute = oneSecond * 60;
@@ -15,22 +19,24 @@ function ChatMessage({ message }) {
       return "Less than a minute ago";
     } else if (diff < oneHour) {
       const minutes = Math.floor(diff / oneMinute);
-      return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
+      return `${minutes}m ago`;
     } else if (diff < oneDay) {
       const hours = Math.floor(diff / oneHour);
-      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+      return `${hours}h ago`;
     } else {
       const days = Math.floor(diff / oneDay);
-      return `${days} day${days > 1 ? "s" : ""} ago`;
+      return `${days}d ago`;
     }
   };
   return (
-    <div className={`chatMessage`}>
+    <div
+      className={`chatMessage ${message.uid === user?.uid ? "myMessage" : "notMyMessage"}`}
+    >
       <span className="chatMessageName" style={{ color: message.color }}>
         {message.name + " "}
       </span>
-      <span className="chatMessageTime">{getTimeDiffString(message)}</span>
       <p className="chatMessageText">{message.text}</p>
+      <p className="chatMessageTime">{getTimeDiffString(message)}</p>
     </div>
   );
 }

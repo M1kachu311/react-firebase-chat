@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch,useSelector } from "react-redux";
+import { unsetUser } from "../redux/user";
 import { db, auth } from "../firebase";
 import { collection, orderBy, query, limitToLast } from "firebase/firestore";
 import { LogoutOutlined } from "@ant-design/icons";
@@ -8,9 +10,10 @@ import ChatForm from "./ChatForm";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "../style/ChatRoom.scss";
 
-function ChatRoom({ user }) {
+function ChatRoom() {
   const navigate = useNavigate();
-  const [userColor, setUserColor] = useState();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
   const messagesRef = collection(db, "messages");
   const messagesQuery = query(
     messagesRef,
@@ -21,10 +24,7 @@ function ChatRoom({ user }) {
   const messagesContainerRef = useRef(null);
 
   useEffect(() => {
-    if (user) {
-      //generate random color for user in chat
-      setUserColor(`#${Math.floor(Math.random() * 16777215).toString(16)}`);
-    } else {
+    if (!user) {
       //redirect to login when logged out
       navigate("/");
     }
@@ -49,8 +49,9 @@ function ChatRoom({ user }) {
         <div
           className="logoutButton pillButton"
           type="primary"
-          onClick={() => {
-            auth.signOut();
+          onClick={async () => {
+            await auth.signOut();
+            dispatch(unsetUser());
           }}
         >
           <LogoutOutlined />
@@ -63,7 +64,7 @@ function ChatRoom({ user }) {
             return <ChatMessage message={message} />;
           })}
       </div>
-      <ChatForm user={user} userColor={userColor} />
+      <ChatForm />
     </div>
   );
 }

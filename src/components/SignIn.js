@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser, setUserColor } from "../redux/user";
 import { signInAnonymously, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import { message, Input } from "antd";
@@ -7,9 +9,13 @@ import { LoginOutlined, WechatOutlined } from "@ant-design/icons";
 import "../style/SignIn.scss";
 
 function SignIn() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [displayName, setDisplayName] = useState("");
 
+  const generateRandomColorForNewUser = () => {
+    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+  };
   const handleChange = (event) => {
     setDisplayName(event.target.value);
   };
@@ -21,6 +27,9 @@ function SignIn() {
     }
     const { user } = await signInAnonymously(auth);
     await updateProfile(user, { displayName });
+    const userColor = generateRandomColorForNewUser();
+    dispatch(setUser(user));
+    dispatch(setUserColor(userColor));
     navigate("/chat");
   };
   return (

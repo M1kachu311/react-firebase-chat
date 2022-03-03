@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Input } from "antd";
 import { db } from "../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import Picker from "emoji-picker-react";
 import { SmileOutlined, SendOutlined } from "@ant-design/icons";
 
-function ChatForm({ user, userColor }) {
+function ChatForm() {
+  const { user,userColor } = useSelector((state) => state.user);
   const [text, setText] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const onEmojiClick = (event, emojiObject) => {
