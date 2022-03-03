@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Input } from "antd";
 import { db } from "../firebase";
@@ -7,7 +7,8 @@ import Picker from "emoji-picker-react";
 import { SmileOutlined, SendOutlined } from "@ant-design/icons";
 
 function ChatForm() {
-  const { user,userColor } = useSelector((state) => state.user);
+  const emojiSelectorRef = useRef(null);
+  const { user, userColor } = useSelector((state) => state.user);
   const [text, setText] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const onEmojiClick = (event, emojiObject) => {
@@ -32,35 +33,55 @@ function ChatForm() {
     setText(event.target.value);
   };
 
+  //close the emoji sleector if click outside of it
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        emojiSelectorRef.current &&
+        !emojiSelectorRef.current.contains(event.target)
+      ) {
+        setShowEmojiPicker(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [emojiSelectorRef]);
+
   return (
     <div className="formContainer">
       <Input
         placeholder="Send a message"
         value={text}
         onChange={handleChange}
+        maxlength="128"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             handleSendMessage();
           }
         }}
       ></Input>
-      <SmileOutlined
-        className="emojiSelectorButton"
-        onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-      />
+      <div className="emojiPickerContainer" ref={emojiSelectorRef}>
+        <SmileOutlined
+          className="emojiSelectorButton"
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+        />
+        {showEmojiPicker && (
+          <Picker
+            pickerStyle={{
+              position: "absolute",
+              bottom: "90px",
+              right: "15px",
+            }}
+            onEmojiClick={onEmojiClick}
+          />
+        )}
+      </div>
+
       <div className="sendMessageButton" onClick={handleSendMessage}>
         <SendOutlined />
       </div>
-      {showEmojiPicker && (
-        <Picker
-          pickerStyle={{
-            position: "absolute",
-            bottom: "90px",
-            right: "15px",
-          }}
-          onEmojiClick={onEmojiClick}
-        />
-      )}
     </div>
   );
 }
