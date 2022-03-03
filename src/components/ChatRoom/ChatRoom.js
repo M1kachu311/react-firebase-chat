@@ -1,18 +1,16 @@
 import React, { useEffect, useRef } from "react";
-import { useDispatch,useSelector } from "react-redux";
-import { unsetUser } from "../redux/user";
-import { db, auth } from "../firebase";
+import { useSelector } from "react-redux";
+import { db } from "../../firebase";
 import { collection, orderBy, query, limitToLast } from "firebase/firestore";
-import { LogoutOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import ChatMessage from "./ChatMessage";
-import ChatForm from "./ChatForm";
+import ChatRoomHeader from '../ChatRoomHeader/ChatRoomHeader';
+import ChatMessage from "../ChatMessage/ChatMessage";
+import ChatForm from "../ChatForm/ChatForm";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import "../style/ChatRoom.scss";
+import "./ChatRoom.scss";
 
 function ChatRoom() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const messagesRef = collection(db, "messages");
   const messagesQuery = query(
@@ -41,23 +39,7 @@ function ChatRoom() {
 
   return (
     <div className="chatRoom">
-      <div className="chatRoomHeader">
-        <div className="greeting">
-          <span>Hi {user?.displayName}, </span>
-          <span>Say hi to your friends 👋</span>
-        </div>
-        <div
-          className="logoutButton pillButton"
-          type="primary"
-          onClick={async () => {
-            await auth.signOut();
-            dispatch(unsetUser());
-          }}
-        >
-          <LogoutOutlined />
-          Sign out
-        </div>
-      </div>
+      <ChatRoomHeader/>
       <div className="messagesContainer" ref={messagesContainerRef}>
         {messages &&
           messages.map((message,index) => {

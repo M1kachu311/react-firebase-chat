@@ -1,0 +1,36 @@
+.formContainer {
+  height: 80px;
+  display: flex;
+  position: relative;
+  .sendMessageInput {
+    padding-right: 52px;
+    font-size: 20px;
+  }
+  .emojiSelectorButton {
+    font-size: 32px;
+    position: absolute;
+    right: 128px;
+    top: 33%;
+    color: #d9d9d9;
+  }
+  .sendMessageButton {
+    width: 140px;
+    height: 100%;
+    color: white;
+    background: rgba(245, 75, 100, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+    &:hover {
+      background: darken($color: rgba(245, 75, 100, 1), $amount: 5);
+      svg {
+        transition: all 0.3s ease-in;
+        transform: scale(1.1);
+      }
+    }
+  }
+}

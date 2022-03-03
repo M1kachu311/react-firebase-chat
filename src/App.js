@@ -1,8 +1,8 @@
 import React from "react";
 import "antd/dist/antd.css";
-import "./style/App.scss";
-import ChatRoom from "./components/ChatRoom";
-import SignIn from "./components/SignIn";
+import "./App.scss";
+import ChatRoom from "./components/ChatRoom/ChatRoom";
+import SignIn from "./components/SignIn/SignIn";
 import { Routes, Route } from "react-router-dom";
 
 function App() {

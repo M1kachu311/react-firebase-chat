@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import "../style/ChatMessage.scss";
+import "./ChatMessage.scss";
 
 function ChatMessage({ message }) {
   const { user } = useSelector((state) => state.user);

@@ -4,10 +4,11 @@
   max-width: 95%;
   margin: 8px 16px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.07);
   position: relative;
   word-break: break-word;
   user-select: text;
+  text-align: left;
   &:before {
     content: "";
     width: 0px;
@@ -28,24 +29,22 @@
   }
 }
 .myMessage {
-  text-align: right;
   align-self: flex-end;
-  background: #e8f4f8;
+  background: #d1f2ff;
   border-top-right-radius: 0px;
   .chatMessageName {
     display: none;
   }
   &:before {
-    border-left: 4px solid #e8f4f8;
+    border-left: 4px solid #d1f2ff;
     border-right: 4px solid transparent;
-    border-top: 4px solid #e8f4f8;
+    border-top: 4px solid #d1f2ff;
     border-bottom: 4px solid transparent;
     right: -8px;
-    filter: drop-shadow(2px 0px 1px rgba(0, 0, 0, 0.1))
+    filter: drop-shadow(2px 0px 1px rgba(0, 0, 0, 0.07));
   }
 }
 .notMyMessage {
-  text-align: left;
   align-self: flex-start;
   background-color: #fff;
   border-top-left-radius: 0px;
@@ -55,6 +54,6 @@
     border-top: 4px solid #fff;
     border-bottom: 4px solid transparent;
     left: -8px;
-    filter: drop-shadow(-2px 0px 1px rgba(0, 0, 0, 0.1))
+    filter: drop-shadow(-2px 0px 1px rgba(0, 0, 0, 0.07));
   }
 }

@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Input } from "antd";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import Picker from "emoji-picker-react";
 import { SmileOutlined, SendOutlined } from "@ant-design/icons";
+import "./ChatForm.scss";
 
 function ChatForm() {
   const emojiSelectorRef = useRef(null);
@@ -52,6 +53,7 @@ function ChatForm() {
   return (
     <div className="formContainer">
       <Input
+        className="sendMessageInput"
         placeholder="Send a message"
         value={text}
         onChange={handleChange}

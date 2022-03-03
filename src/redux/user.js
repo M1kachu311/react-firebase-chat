@@ -10,19 +10,16 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      const newState = { ...state, user: action.payload };
+      const newState = { userColor: action.payload.userColor, user: action.payload.user };
       return newState;
     },
-    setUserColor: (state, action) => {
-      const newState = { ...state, userColor: action.payload };
-      return newState;
-    },
+
     unsetUser: (state) => {
       return initialState;
     },
   },
 });
 
-export const { setUser, setUserColor, unsetUser } = userSlice.actions;
+export const { setUser, unsetUser } = userSlice.actions;
 
 export default userSlice.reducer;

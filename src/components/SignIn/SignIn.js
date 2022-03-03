@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUser, setUserColor } from "../redux/user";
+import { setUser } from "../../redux/user";
 import { signInAnonymously, updateProfile } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import { message, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { LoginOutlined, WechatOutlined } from "@ant-design/icons";
-import "../style/SignIn.scss";
+import "./SignIn.scss";
 
 function SignIn() {
   const dispatch = useDispatch();
@@ -28,8 +28,7 @@ function SignIn() {
     const { user } = await signInAnonymously(auth);
     await updateProfile(user, { displayName });
     const userColor = generateRandomColorForNewUser();
-    dispatch(setUser(user));
-    dispatch(setUserColor(userColor));
+    dispatch(setUser({ user, userColor }));
     navigate("/chat");
   };
   return (
@@ -50,14 +49,14 @@ function SignIn() {
           }
         }}
       />
-      <div
+      <button
         type="primary"
         onClick={handleLogin}
         className="signInButton pillButton"
       >
         <LoginOutlined />
         Sign In
-      </div>
+      </button>
     </div>
   );
 }

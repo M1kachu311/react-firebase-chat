@@ -1,0 +1,28 @@
+.chatRoomHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #242a38;
+  padding: 20px;
+  height: 80px;
+  .greeting {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.25;
+    span:nth-child(1) {
+      font-size: 24px;
+      font-weight: 500;
+      color: white;
+    }
+    span:nth-child(2) {
+      font-weight: 300;
+      color: #d8dadb;
+    }
+  }
+  .logoutButton {
+    svg {
+      margin-right: 5px;
+    }
+  }
+}
