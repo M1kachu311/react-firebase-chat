@@ -13,7 +13,6 @@ export const userSlice = createSlice({
       const newState = { userColor: action.payload.userColor, user: action.payload.user };
       return newState;
     },
-
     unsetUser: (state) => {
       return initialState;
     },

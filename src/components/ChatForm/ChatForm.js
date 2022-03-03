@@ -63,7 +63,7 @@ function ChatForm() {
             handleSendMessage();
           }
         }}
-      ></Input>
+      />
       <div className="emojiPickerContainer" ref={emojiSelectorRef}>
         <SmileOutlined
           className="emojiSelectorButton"
@@ -81,9 +81,9 @@ function ChatForm() {
         )}
       </div>
 
-      <div className="sendMessageButton" onClick={handleSendMessage}>
+      <button className="sendMessageButton" onClick={handleSendMessage}>
         <SendOutlined />
-      </div>
+      </button>
     </div>
   );
 }

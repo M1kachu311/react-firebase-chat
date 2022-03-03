@@ -6,6 +6,7 @@ import { auth } from "../../firebase";
 import { message, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { LoginOutlined, WechatOutlined } from "@ant-design/icons";
+import { generateRandomColorForNewUser } from "../../utils/utils";
 import "./SignIn.scss";
 
 function SignIn() {
@@ -13,9 +14,6 @@ function SignIn() {
   const navigate = useNavigate();
   const [displayName, setDisplayName] = useState("");
 
-  const generateRandomColorForNewUser = () => {
-    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-  };
   const handleChange = (event) => {
     setDisplayName(event.target.value);
   };
@@ -31,6 +29,7 @@ function SignIn() {
     dispatch(setUser({ user, userColor }));
     navigate("/chat");
   };
+
   return (
     <div className="signIn">
       <div className="signInHeader">
