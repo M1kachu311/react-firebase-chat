@@ -55,7 +55,7 @@ function ChatForm() {
         placeholder="Send a message"
         value={text}
         onChange={handleChange}
-        maxlength="128"
+        maxLength="128"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             handleSendMessage();

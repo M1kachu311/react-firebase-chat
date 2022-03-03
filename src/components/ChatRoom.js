@@ -60,8 +60,8 @@ function ChatRoom() {
       </div>
       <div className="messagesContainer" ref={messagesContainerRef}>
         {messages &&
-          messages.map((message) => {
-            return <ChatMessage message={message} />;
+          messages.map((message,index) => {
+            return <ChatMessage message={message} key={`message${index}`} />;
           })}
       </div>
       <ChatForm />

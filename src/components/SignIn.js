@@ -43,7 +43,7 @@ function SignIn() {
         className="displayNameInput"
         value={displayName}
         onChange={handleChange}
-        maxlength="25"
+        maxLength="25"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             handleLogin();
